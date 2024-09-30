@@ -18,11 +18,20 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+}
+
+jacoco {
+    toolVersion = "0.8.12"
 }
 
 jacocoTestReport {
     reports {
-        xml.required
+        xml.required = true
     }
 }
 
