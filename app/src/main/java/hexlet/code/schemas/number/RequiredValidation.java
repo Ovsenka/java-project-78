@@ -1,0 +1,12 @@
+package hexlet.code.schemas.number;
+
+import hexlet.code.schemas.ValidationStrategy;
+
+public final class RequiredValidation implements ValidationStrategy<Integer> {
+    public static final String NAME = "required";
+
+    @Override
+    public boolean validate(Integer value) {
+        return value != null;
+    }
+}
