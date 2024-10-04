@@ -6,7 +6,7 @@ public final class RequiredValidation implements ValidationStrategy<String> {
     public static final String NAME = "required";
 
     @Override
-    public boolean validate(String input) {
-        return !input.isEmpty();
+    public boolean validate(String value) {
+        return !value.isEmpty();
     }
 }

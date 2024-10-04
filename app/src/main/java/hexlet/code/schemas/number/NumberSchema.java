@@ -10,7 +10,7 @@ public class NumberSchema extends BaseSchema<Integer> {
     }
 
     public NumberSchema positive() {
-        strategies.put(PositiveValidation.NAME, new PositiveValidation());
+        super.strategies.put(PositiveValidation.NAME, new PositiveValidation());
         return this;
     }
 

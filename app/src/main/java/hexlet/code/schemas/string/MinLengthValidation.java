@@ -10,7 +10,7 @@ public class MinLengthValidation implements ValidationStrategy<String> {
         this.minLength = minLength;
     }
 
-    public boolean validate(String input) {
-        return input.length() >= minLength;
+    public boolean validate(String value) {
+        return value.length() >= minLength;
     }
 }
