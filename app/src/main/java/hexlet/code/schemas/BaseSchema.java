@@ -16,7 +16,7 @@ public abstract class BaseSchema<T> {
     }
 
     /**
-     * Checking values against a correspondence scheme
+     * Checking values against a correspondence scheme.
      * @param dataToValidate value for checks
      * @return true if value is valid
      */
