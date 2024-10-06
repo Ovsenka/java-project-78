@@ -23,7 +23,7 @@ public class ValidatorTests {
     private static Validator validator;
 
     @BeforeEach
-    public void init() {
+    public final void init() {
         stringSchema = new StringSchema();
         numberSchema = new NumberSchema();
         mapSchema = new MapSchema<>();
