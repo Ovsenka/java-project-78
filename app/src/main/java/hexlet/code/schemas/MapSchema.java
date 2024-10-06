@@ -1,33 +1,32 @@
-package hexlet.code.schemas.map;
-
-import hexlet.code.schemas.BaseSchema;
+package hexlet.code.schemas;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public final class MapSchema<K, V> extends BaseSchema<Map<K, V>> {
-    private final Map<K, BaseSchema<V>> valueStrategies = new HashMap<>();
+    private final Map<K, BaseSchema<V>> valueSchemas = new HashMap<>();
 
     public MapSchema<K, V> required() {
-        super.strategies.put(RequiredValidation.NAME, new RequiredValidation<>());
+        addCheck("required", Objects::nonNull);
         return this;
     }
 
     public MapSchema<K, V> sizeof(int size) {
-        super.strategies.put(SizeofValidation.NAME, new SizeofValidation<>(size));
+        addCheck("minLength", value -> value.size() == size);
         return this;
     }
     public void shape(Map<K, BaseSchema<V>> schemas) {
-        this.valueStrategies.putAll(schemas);
+        this.valueSchemas.putAll(schemas);
     }
 
     @Override
     public boolean isValid(Map<K, V> mapToValidate) {
-        boolean isValidMap = super.strategies.entrySet()
+        boolean isValidMap = super.getChecks().entrySet()
                 .stream()
-                .allMatch(entry -> entry.getValue().validate(mapToValidate));
+                .allMatch(entry -> entry.getValue().test(mapToValidate));
 
-        boolean isValidMapValues = this.valueStrategies.entrySet()
+        boolean isValidMapValues = this.valueSchemas.entrySet()
                 .stream()
                 .allMatch((entry) -> {
                     K key = entry.getKey();

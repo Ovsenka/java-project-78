@@ -4,19 +4,24 @@ import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Predicate;
 
 @Getter
 public abstract class BaseSchema<T> {
 
-    protected Map<String, ValidationStrategy<T>> strategies = new HashMap<>();
+    private final Map<String, Predicate<T>> checks = new HashMap<>();
+
+    public void addCheck(String name, Predicate<T> predicate) {
+        checks.put(name, predicate);
+    }
 
     public boolean isValid(T dataToValidate) {
         if (dataToValidate == null) {
-            return !strategies.containsKey("required");
+            return !checks.containsKey("required");
         }
 
-        return strategies.entrySet()
+        return checks.entrySet()
                 .stream()
-                .allMatch(entry -> entry.getValue().validate(dataToValidate));
+                .allMatch(entry -> entry.getValue().test(dataToValidate));
     }
 }
